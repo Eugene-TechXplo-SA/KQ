@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import authRoutes from "./routes/auth";
@@ -22,6 +23,8 @@ app.route("/protected", protectedRoutes);
 
 const port = Number(process.env.API_PORT || 8787);
 
+console.log(`🚀 API server starting on port ${port}...`);
 serve({ fetch: app.fetch, port });
+console.log(`✓ API server ready at http://localhost:${port}`);
 
 export default app;
