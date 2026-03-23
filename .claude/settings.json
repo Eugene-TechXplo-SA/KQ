@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(openspec status --change \"fix-spec-inconsistencies\" --json)",
+      "Bash(openspec instructions design --change \"fix-spec-inconsistencies\" --json)",
+      "Bash(openspec instructions specs --change \"fix-spec-inconsistencies\" --json)",
+      "Bash(openspec instructions tasks --change \"fix-spec-inconsistencies\" --json)",
+      "Bash(openspec status --change \"fix-spec-inconsistencies\")",
+      "Bash(openspec instructions apply --change \"fix-spec-inconsistencies\" --json)"
+    ]
+  }
+}
