@@ -1,26 +1,26 @@
-"use client"; // important: allows hooks and Supabase client usage
+"use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { getSupabase } from "@/lib/supabaseClient";
 import "../styles/index.css";
 
 export default function RootLayout({ children }) {
   const [session, setSession] = useState(null);
 
-  // 1️⃣ Get the current session on mount
   useEffect(() => {
+    const supabase = getSupabase();
+    if (!supabase) return;
+
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
     });
 
-    // 2️⃣ Listen for login/logout events
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setSession(session);
       },
     );
 
-    // 3️⃣ Clean up listener on unmount
     return () => listener.subscription.unsubscribe();
   }, []);
 

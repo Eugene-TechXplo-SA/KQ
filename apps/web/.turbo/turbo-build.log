@@ -2,10 +2,16 @@
 > @kq/web@1.0.0 build
 > next build
 
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
    ▲ Next.js 15.3.9
+   - Environments: .env.local
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 2000ms
+ ✓ Compiled successfully in 19.0s
    Linting and checking validity of types ...
    Collecting page data ...
    Generating static pages (0/16) ...
@@ -17,25 +23,26 @@
    Collecting build traces ...
 
 Route (app)                                 Size  First Load JS
-┌ ○ /                                      173 B         167 kB
+┌ ○ /                                      173 B         168 kB
 ├ ○ /_not-found                            975 B         103 kB
-├ ○ /announcements                       3.77 kB         109 kB
-├ ○ /approvals                           5.57 kB         111 kB
-├ ○ /dashboard                           1.63 kB         107 kB
-├ ○ /landing                               172 B         167 kB
-├ ○ /ledger                              4.66 kB         110 kB
-├ ○ /login                               2.46 kB         163 kB
-├ ○ /scraper                             5.08 kB         110 kB
-├ ○ /settings                             7.8 kB         113 kB
+├ ƒ /announcements                       3.77 kB         109 kB
+├ ƒ /approvals                           5.57 kB         111 kB
+├ ƒ /dashboard                           1.63 kB         107 kB
+├ ○ /landing                               172 B         168 kB
+├ ƒ /ledger                              4.66 kB         110 kB
+├ ○ /login                                2.7 kB         163 kB
+├ ƒ /scraper                             5.08 kB         110 kB
+├ ƒ /settings                             7.8 kB         113 kB
 ├ ○ /signup                                139 B         102 kB
-├ ○ /user                                10.3 kB         112 kB
-├ ○ /users                               4.21 kB         110 kB
-└ ○ /withdrawals                           311 B         102 kB
+├ ƒ /user                                10.3 kB         112 kB
+├ ƒ /users                               4.21 kB         110 kB
+└ ƒ /withdrawals                           311 B         102 kB
 + First Load JS shared by all             102 kB
   ├ chunks/315-9e23bbf57c7e5e0b.js       46.5 kB
   ├ chunks/87c73c54-77fa47a04f06bf27.js  53.2 kB
   └ other shared chunks (total)          1.92 kB
 
 
-○  (Static)  prerendered as static content
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
 

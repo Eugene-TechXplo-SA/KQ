@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import LoginForm from "./LoginForm";
 import { loginWithEmail, persistAuthSession } from "../../lib/authApi";
-import { supabase } from "../../lib/supabaseClient";
+import { getSupabase } from "../../lib/supabaseClient";
 
 
 
@@ -32,6 +32,11 @@ export default function LoginOverlay() {
   setErrorMessage("");
 
   try {
+    const supabase = getSupabase();
+    if (!supabase) {
+      throw new Error("Supabase client not initialized");
+    }
+
     const { data, error } = await supabase.auth.signInWithPassword({
       email: trimmedEmail,
       password,
