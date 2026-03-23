@@ -2,38 +2,40 @@
 > @kq/web@1.0.0 build
 > next build
 
-▲ Next.js 16.2.1 (Turbopack)
+   ▲ Next.js 15.3.9
 
-  Creating an optimized production build ...
-✓ Compiled successfully in 21.8s
-  Running TypeScript ...
-  Finished TypeScript in 151ms ...
-  Collecting page data using 7 workers ...
-  Generating static pages using 7 workers (0/15) ...
-  Generating static pages using 7 workers (3/15) 
-  Generating static pages using 7 workers (7/15) 
-  Generating static pages using 7 workers (11/15) 
-✓ Generating static pages using 7 workers (15/15) in 553ms
-  Finalizing page optimization ...
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 2000ms
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/16) ...
+   Generating static pages (4/16) 
+   Generating static pages (8/16) 
+   Generating static pages (12/16) 
+ ✓ Generating static pages (16/16)
+   Finalizing page optimization ...
+   Collecting build traces ...
 
-Route (app)
-┌ ○ /
-├ ○ /_not-found
-├ ○ /announcements
-├ ○ /approvals
-├ ○ /dashboard
-├ ○ /landing
-├ ○ /ledger
-├ ○ /login
-├ ○ /scraper
-├ ○ /settings
-├ ○ /signup
-├ ○ /user
-├ ○ /users
-└ ○ /withdrawals
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      173 B         167 kB
+├ ○ /_not-found                            975 B         103 kB
+├ ○ /announcements                       3.77 kB         109 kB
+├ ○ /approvals                           5.57 kB         111 kB
+├ ○ /dashboard                           1.63 kB         107 kB
+├ ○ /landing                               172 B         167 kB
+├ ○ /ledger                              4.66 kB         110 kB
+├ ○ /login                               2.46 kB         163 kB
+├ ○ /scraper                             5.08 kB         110 kB
+├ ○ /settings                             7.8 kB         113 kB
+├ ○ /signup                                139 B         102 kB
+├ ○ /user                                10.3 kB         112 kB
+├ ○ /users                               4.21 kB         110 kB
+└ ○ /withdrawals                           311 B         102 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/315-9e23bbf57c7e5e0b.js       46.5 kB
+  ├ chunks/87c73c54-77fa47a04f06bf27.js  53.2 kB
+  └ other shared chunks (total)          1.92 kB
 
-
-ƒ Proxy (Middleware)
 
 ○  (Static)  prerendered as static content
 
