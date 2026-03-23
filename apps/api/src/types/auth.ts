@@ -36,3 +36,7 @@ export interface PrincipalContext {
   tokenVersion: number;
   kycStatus?: KycStatus;
 }
+
+export type AuthContext = PrincipalContext & {
+  userId: string;
+};

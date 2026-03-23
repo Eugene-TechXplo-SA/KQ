@@ -1,0 +1,4 @@
+
+> @kq/job-reward-distribution@1.0.0 build
+> tsc --outDir dist src/index.ts
+

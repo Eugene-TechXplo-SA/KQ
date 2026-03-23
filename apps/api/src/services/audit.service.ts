@@ -1,4 +1,5 @@
 import type { PoolClient } from "pg";
+import { supabase } from "../db/supabase";
 
 export interface AuditLogInput {
   client: PoolClient;
@@ -51,4 +52,25 @@ export async function writeAuditLog(input: AuditLogInput): Promise<void> {
       JSON.stringify(metadata),
     ],
   );
+}
+
+interface AuditEventInput {
+  adminId: string;
+  action: string;
+  targetType: string;
+  targetId: string;
+  metadata?: unknown;
+}
+
+export async function logAuditEvent(input: AuditEventInput): Promise<void> {
+  const { adminId, action, targetType, targetId, metadata } = input;
+
+  await supabase.from("audit_logs").insert({
+    action,
+    entity_type: targetType,
+    entity_id: targetId,
+    performed_by: adminId,
+    performer_type: "ADMIN",
+    metadata: metadata || null,
+  });
 }
