@@ -12,10 +12,6 @@ export async function loginWithEmail(
   password: string,
 ): Promise<AuthPayload> {
   const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -38,10 +34,6 @@ export async function signupWithEmail(
   password: string,
 ): Promise<void> {
   const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
   const { error } = await supabase.auth.signUp({ email, password });
 
   if (error) {

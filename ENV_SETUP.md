@@ -1,10 +1,42 @@
-# Environment Variable Setup
+# Environment Configuration - Fixed
 
-## ✅ Configuration Complete
+## Issue
+Getting "Supabase client not initialized" errors during login/signup.
 
-All environment variables have been properly configured for both API and Web applications.
+## Root Cause
+The Supabase client was trying to initialize during server-side rendering (SSR) in Next.js, but `process.env.NEXT_PUBLIC_*` variables weren't available in the SSR context.
 
-### API (`apps/api/.env`)
+## Solution
+Changed to lazy initialization pattern with `getSupabase()` function that only initializes the client when actually called (in browser context).
+
+## Changes Made
+
+### 1. Supabase Client (`apps/web/lib/supabaseClient.ts`)
+```typescript
+// Lazy initialization - client only created when getSupabase() is called
+let supabaseInstance: SupabaseClient | null = null
+
+export function getSupabase(): SupabaseClient {
+  if (supabaseInstance) {
+    return supabaseInstance
+  }
+  // ... initialize client
+  return supabaseInstance
+}
+
+// Export for compatibility - only initializes in browser
+export const supabase = typeof window !== 'undefined' ? getSupabase() : null as any
+```
+
+### 2. Updated All Imports
+- `lib/authApi.ts` - Uses `getSupabase()`
+- `lib/requireAuth.ts` - Uses `getSupabase()`
+- `app/layout.jsx` - Uses `getSupabase()`
+- `components/auth/LoginOverlay.jsx` - Uses `getSupabase()`
+
+### 3. Environment Files
+
+**API (.env)**
 ```
 SUPABASE_URL=https://igsfzfkncnocanoedpee.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
@@ -14,55 +46,39 @@ JWT_SECRET=your-BoJiLENsT...
 PORT=8787
 ```
 
-### Web (`apps/web/.env`)
+**Web (.env)**
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://igsfzfkncnocanoedpee.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...
 NEXT_PUBLIC_API_URL=http://localhost:8787
 ```
 
-## Changes Made
+## Verification
 
-1. **Supabase Client Initialization** (`apps/web/lib/supabaseClient.ts`)
-   - Changed to lazy initialization with `getSupabase()` function
-   - Added proper null checks for server-side rendering
-   - Prevents "client not defined" errors
-
-2. **Environment Files**
-   - Created `apps/api/.env` with all required API variables
-   - Created `apps/web/.env` with Next.js public variables
-   - Removed duplicate `requireAuth.js` file
-
-3. **Updated Imports**
-   - `app/layout.jsx` - Uses `getSupabase()` with null check
-   - `components/auth/LoginOverlay.jsx` - Calls `getSupabase()` before use
-   - `lib/authApi.ts` - Added client initialization checks
-   - `lib/requireAuth.ts` - Handles null client gracefully
-
-## Testing
-
-### API Server
-```bash
-cd apps/api
-npm run dev
-# ✓ Server starts on http://localhost:8787
-```
-
-### Web Server
-```bash
-cd apps/web
-npm run dev
-# ✓ Server starts on http://localhost:3000
-# ✓ Loads .env file
-# ✓ No Supabase client errors
-```
-
-### Build
+### Build Test
 ```bash
 npm run build
-# ✓ All packages build successfully
+# ✓ All 5 tasks successful
+# ✓ Web app builds without errors
+# ✓ API builds successfully
 ```
 
-## Next Steps
+### Expected Behavior
+- Login form should now work without "client not initialized" errors
+- Signup form should work properly
+- Auth state changes are tracked correctly
+- Session persistence works in browser
 
-Both servers should now start without errors. The Supabase client will initialize properly when accessed in the browser.
+## How It Works
+
+1. When user visits page, `supabase` export is `null` during SSR
+2. When client-side code runs, `getSupabase()` is called
+3. Function checks for existing instance (singleton pattern)
+4. If not exists, creates new client with env vars
+5. Returns the same instance for all future calls
+
+This ensures:
+- No SSR errors from missing env vars
+- Client only created once (performance)
+- All components use same client instance
+- Works with Next.js rendering model

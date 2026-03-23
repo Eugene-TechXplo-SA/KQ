@@ -9,7 +9,6 @@ export default function RootLayout({ children }) {
 
   useEffect(() => {
     const supabase = getSupabase();
-    if (!supabase) return;
 
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);

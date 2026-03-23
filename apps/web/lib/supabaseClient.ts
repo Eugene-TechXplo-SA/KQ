@@ -1,26 +1,27 @@
-import { createBrowserClient } from '@supabase/ssr'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-let supabaseInstance: any = null;
+let supabaseInstance: SupabaseClient | null = null
 
-export function getSupabase() {
-  if (typeof window === 'undefined') {
-    return null as any;
-  }
-
+export function getSupabase(): SupabaseClient {
   if (supabaseInstance) {
-    return supabaseInstance;
+    return supabaseInstance
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  if (!supabaseUrl || !supabaseKey) {
-    console.error('Supabase URL and key are required', { supabaseUrl, supabaseKey });
-    return null as any;
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Missing Supabase environment variables')
   }
 
-  supabaseInstance = createBrowserClient(supabaseUrl, supabaseKey);
-  return supabaseInstance;
+  supabaseInstance = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+    },
+  })
+
+  return supabaseInstance
 }
 
-export const supabase = typeof window !== 'undefined' ? getSupabase() : null as any;
+export const supabase = typeof window !== 'undefined' ? getSupabase() : null as any

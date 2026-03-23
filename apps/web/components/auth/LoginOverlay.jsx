@@ -4,10 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import LoginForm from "./LoginForm";
-import { loginWithEmail, persistAuthSession } from "../../lib/authApi";
 import { getSupabase } from "../../lib/supabaseClient";
-
-
 
 export default function LoginOverlay() {
   const router = useRouter();
@@ -33,10 +30,6 @@ export default function LoginOverlay() {
 
   try {
     const supabase = getSupabase();
-    if (!supabase) {
-      throw new Error("Supabase client not initialized");
-    }
-
     const { data, error } = await supabase.auth.signInWithPassword({
       email: trimmedEmail,
       password,
@@ -44,7 +37,6 @@ export default function LoginOverlay() {
 
     if (error) throw error;
 
-    // Optional: mark admin login (UI only, NOT security)
     try {
       localStorage.setItem("kq_admin_logged_in", "true");
     } catch {}
