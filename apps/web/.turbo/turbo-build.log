@@ -8,10 +8,10 @@ You can learn more, including how to opt-out if you'd not like to participate in
 https://nextjs.org/telemetry
 
    ▲ Next.js 15.3.9
-   - Environments: .env.local
+   - Environments: .env
 
    Creating an optimized production build ...
- ✓ Compiled successfully in 19.0s
+ ✓ Compiled successfully in 15.0s
    Linting and checking validity of types ...
    Collecting page data ...
    Generating static pages (0/16) ...
@@ -46,3 +46,8 @@ Route (app)                                 Size  First Load JS
 ○  (Static)   prerendered as static content
 ƒ  (Dynamic)  server-rendered on demand
 
+npm notice
+npm notice New major version of npm available! 10.9.4 -> 11.12.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.0
+npm notice To update run: npm install -g npm@11.12.0
+npm notice
